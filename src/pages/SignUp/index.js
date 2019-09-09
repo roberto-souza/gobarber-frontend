@@ -4,6 +4,8 @@ import { Form, Input } from '@rocketseat/unform';
 
 import logo from '~/assets/img/logo.svg';
 
+import Validations from '~/validations';
+
 export default function SignUp() {
   function handleSubmit(data) {
     console.tron.log(data);
@@ -12,7 +14,7 @@ export default function SignUp() {
   return (
     <>
       <img src={logo} alt="GoBarber" />
-      <Form onSubmit={handleSubmit}>
+      <Form schema={Validations.SignUp} onSubmit={handleSubmit}>
         <Input name="name" placeholder="Nome Completo" />
         <Input name="email" type="email" placeholder="Seu e-mail" />
         <Input
