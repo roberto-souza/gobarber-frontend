@@ -21,6 +21,8 @@ export function* signIn({ payload }) {
       return;
     }
 
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
     yield put(signInSuccess(token, user));
 
     history.push('/dashboard');
@@ -43,7 +45,18 @@ export function* singUp({ payload }) {
   }
 }
 
+export function setToken({ payload }) {
+  if (!payload) return;
+
+  const { token } = payload.auth;
+
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+}
+
 export default all([
+  takeLatest('persist/REHYDRATE', setToken),
   takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
   takeLatest(AuthTypes.SIGN_UP_REQUEST, singUp),
 ]);
